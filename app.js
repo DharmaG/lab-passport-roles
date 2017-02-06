@@ -9,13 +9,13 @@ const flash = require("connect-flash");
 const User = require('./models/user')
 const bcrypt = require('bcrypt');
 var index = require('./routes/index');
-var users = require('./routes/users');
+// var users = require('./routes/users');
 const session       = require("express-session");
 const passport      = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 // Mongoose configuration
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/passport-local");
+mongoose.connect("mongodb://localhost/ibi-ironhack");
 
 var app = express();
 
@@ -73,7 +73,6 @@ passport.use(new LocalStrategy({
 app.use('/', authController);
 
 app.use('/', index);
-app.use('/users', users);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
