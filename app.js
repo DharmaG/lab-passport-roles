@@ -13,6 +13,7 @@ var index = require('./routes/index');
 const session       = require("express-session");
 const passport      = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
+const FbStrategy = require('passport-facebook').Strategy;
 // Mongoose configuration
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/ibi-ironhack");
@@ -67,7 +68,19 @@ passport.use(new LocalStrategy({
     return next(null, user);
   });
 }));
-
+passport.use(new FbStrategy({
+  clientID: "742315382613846",
+  clientSecret: "56d1f9f91c40b8d65e3163e8f4fbc877",
+  callbackURL: "http://localhost:3000/auth/facebook/callback"
+}, (accessToken, refreshToken, profile, done) => {
+  done(null, profile);
+}));
+passport.serializeUser((user, cb) => {
+  cb(null, user);
+});
+passport.deserializeUser((user, cb) => {
+  cb(null, user);
+});
 
 // Routes
 app.use('/', authController);

@@ -15,6 +15,21 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/login')
   }
 }
+
+function checkIfStaff(role){
+  console.log('jdsjhfdhjdf')
+  return ((role === "Boss") || (role === "Developer") || (role === "TA"))
+}
+
+function ensureEmployee(req, res, next){
+  console.log(req.user.username)
+    if (req.isAuthenticated() && checkIfStaff(req.user.role) ) {
+      console.log('guarra');
+      return next();
+    } else {
+      res.redirect('/login')
+    }
+}
 function checkRoles(role) {
   return function(req, res, next) {
     if (req.isAuthenticated() && req.user.role === role) {
@@ -25,6 +40,8 @@ function checkRoles(role) {
   }
 }
 const checkBoss = checkRoles('Boss');
+const checkTA = checkRoles('TA');
+const checkDev = checkRoles('Developer');
 
 authController.get("/signup", (req, res, next) => {
   res.render("auth/signup");
@@ -69,7 +86,7 @@ authController.get('/login', (req, res, next) => {
 })
 authController.post("/login", passport.authenticate("local", {
   // console.log
-  successRedirect: "/backup",
+  successRedirect: "/users",
   failureRedirect: "/login",
   failureFlash: true,
   passReqToCallback: true
@@ -127,11 +144,27 @@ authController.post('/backup', checkBoss,(req, res)=>{
   })
 })
 
-authController.get('/users', checkBoss, (req, res, next)=>{
+authController.get('/users', ensureAuthenticated, (req, res, next)=>{
   User.find({role: {$not: {$eq: 'Boss'}}
   }, (err, users)=>{
     if (err){ return next(err);}
     res.render('users', {users: users, currentUser: req.user})
   })
 });
+
+authController.get('/destroy/:userId', checkBoss, (req, res, next) =>{
+  console.log('madafaka');
+  res.redirect('/backup');
+});
+
+authController.get('/profile', ensureEmployee, (req, res, next) => {
+  res.render('profile', {user: req.user});
+});
+
+authController.get("/auth/facebook", passport.authenticate("facebook"));
+authController.get("/auth/facebook/callback", passport.authenticate("facebook", {
+  successRedirect: "/private-page",
+  failureRedirect: "/"
+}));
+
 module.exports = authController;
