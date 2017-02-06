@@ -12,8 +12,8 @@
   <ul>
     <% users.forEach((user) =>{ %>
       <li> <%= user.username %>
-        <% if( currentUser.role === "Boss"){ %>
-          <a href="#">Delete user</a>
+        <% if (currentUser.role === "Boss"){ %>
+          <a href="destroy/<%=user._id %>">Delete user</a>
           <% } %>
       </li>
     <% }) %>

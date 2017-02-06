@@ -5,5 +5,13 @@ That´s it, the Ironhack Bureau Investigation. Then you can think of yourself do
 First thing first, the boss lost his access over the platform and he needs to take control again to give access to his employees.
 
 First Iteration:
-  Rebuild all the platform and make the SUDO to be able to create more "participants". The routes must be protected so only logged in users can access. For the moment foreign users can´t access it, only the superuser can create access.
-  
+  Rebuild all the platform and make the SuperUser to be able to create more "participants". The routes must be protected so only logged users can access it. For the moment foreign users can´t access it, only the superuser can create access.
+
+Second Iteration:
+
+  The SuperUser must be able also to delete employees from the database. This action is reserved to him and only to him. Users can also edit their profile.
+
+  Fourth Iteration:
+    Now that our platform is 100% operative, it´s time to let some new people come in.
+    Add a functionality so new alumni can access the platform login with the Social Network of your choice.
+    Alumni can see their profile and the operative courses but they should not be able to see any of the "management" platform.
