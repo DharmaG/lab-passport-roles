@@ -131,7 +131,7 @@ authController.get('/users', checkBoss, (req, res, next)=>{
   User.find({role: {$not: {$eq: 'Boss'}}
   }, (err, users)=>{
     if (err){ return next(err);}
-    res.render('users', {users: users, user: req.user})
+    res.render('users', {users: users, currentUser: req.user})
   })
 });
 module.exports = authController;
