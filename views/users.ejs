@@ -4,19 +4,50 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <link rel="stylesheet" href="stylesheets/users.css">
   <title>Document</title>
 </head>
 <body>
-  <h3>Some of your users</h3>
-  <ul>
-    <% users.forEach((user) =>{ %>
-      <li> <%= user.username %>
-        <% if (currentUser.role === "Boss"){ %>
-          <a href="destroy/<%=user._id %>">Delete user</a>
-          <% } %>
-      </li>
-    <% }) %>
-  </ul>
+  <div class="row">
+    <article class="col-md-4-offset-4">
+      <h3>Some of your users</h3>
+      <ul class="list-group">
+        <% users.forEach((user) =>{ %>
+          <li class="list-group-item"> <%= user.username %>
+            <% if (currentUser.role === "Boss"){ %>
+              <form action="users/<%=user._id %>/delete" method="POST">
+                <button class="btn btn-default danger" type="submit">Delete User</button>
+              </form>
+              <% } %>
+          </li>
+        <% }) %>
+      </ul>
+  </article>
+  </div>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Username</th>
+        <th>Role</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% users.forEach((user) =>{ %>
+    <tr>
+       <th scope="row">1</th>
+       <td><%=user.username%></td>
+       <td><%=user.role%></td>
+       <% if (currentUser.role === "Boss"){ %>
+         <form action="users/<%=user._id %>/delete" method="POST">
+          <td><button class="btn btn-danger" type="submit">Delete User</button></td>
+         </form>
+         <% } %>
+   </tr>
+   <% }) %>
+    </tbody>
+  </table>
+
 </body>
 </html>
