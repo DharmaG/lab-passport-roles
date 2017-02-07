@@ -16,3 +16,12 @@ Second Iteration:
     Now that our platform is 100% operative, it´s time to let some new people come in.
     Add a functionality so new alumni can access the platform login with the Social Network of your choice. Every new alumni should be stored in the database with "student" role.
     Alumni can see their profile and the operative courses but they should not be able to see any of the "management" platform.
+
+
+    Por hacer:
+        <!-- - añadir los links a las diferentes páginas -->
+        <!-- - formulario de alta de empleados -->
+        - botón de registro con fb
+        - refactorizar authController
+        - página de error cuando acceso no permitido
+        <!-- - más campos al modelo de usuario -->

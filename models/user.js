@@ -4,10 +4,13 @@ const Schema   = mongoose.Schema;
 const userSchema = new Schema({
   username: String,
   password: String,
+  name: String,
+  familyName: String,
+  city: String,
   role: {
     type: String,
-    enum: ['Boss', 'Developer', 'TA', 'student'],
-    default: 'student'
+    enum: ['Boss', 'Developer', 'Teacher Assistant', 'Student'],
+    default: 'Student'
   }
 }, {
   timestamps: { createdAt: "created_at", updatedAt: "updated_at" }
@@ -15,3 +18,4 @@ const userSchema = new Schema({
 
 const User = mongoose.model("User", userSchema);
 module.exports = User;
+// name: String, familyName: String, city: String

@@ -3,6 +3,7 @@ const express = require('express');
 const authController = express.Router();
 // Models
 const User = require('../models/user');
+const Course = require('../models/course')
 // Bcrypt to encrypt passwords
 const bcrypt         = require("bcrypt");
 const bcryptSalt     = 10;
@@ -13,22 +14,19 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   } else {
-    res.redirect('/login');
+    res.redirect('/');
   }
 }
 
 function checkIfStaff(role){
-  console.log('jdsjhfdhjdf');
   return ((role === "Boss") || (role === "Developer") || (role === "TA"));
 }
 
 function ensureEmployee(req, res, next){
-  console.log(req.user.username);
     if (req.isAuthenticated() && checkIfStaff(req.user.role) ) {
-      console.log('guarra');
       return next();
     } else {
-      res.redirect('/login');
+      res.redirect('/forbidden');
     }
 }
 function checkRoles(role) {
@@ -36,7 +34,7 @@ function checkRoles(role) {
     if (req.isAuthenticated() && req.user.role === role) {
       return next();
     } else {
-      res.redirect('/login');
+      res.redirect('/forbidden');
     }
   };
 }
@@ -44,100 +42,52 @@ const checkBoss = checkRoles('Boss');
 const checkTA = checkRoles('TA');
 const checkDev = checkRoles('Developer');
 
-authController.get("/signup", (req, res, next) => {
-  res.render("auth/signup");
-});
 
-authController.post("/signup", (req, res, next) => {
-  const username = req.body.username;
-  const password = req.body.password;
-  const role = req.body.role;
-
-  if (username === "" || password === "") {
-    res.render("auth/signup", { message: "Indicate username and password" });
-    return;
-  }
-
-  User.findOne({ username }, "username", (err, user) => {
-    if (user !== null) {
-      res.render("auth/signup", { message: "The username already exists" });
-      return;
-    }
-
-    var salt     = bcrypt.genSaltSync(bcryptSalt);
-    var hashPass = bcrypt.hashSync(password, salt);
-
-    var newUser = User({
-      username, role,
-      password: hashPass
-    });
-
-    newUser.save((err) => {
-      if (err) {
-        res.render("auth/signup", { message: "The username already exists" });
-      } else {
-        res.redirect("/login");
-      }
-    });
-  });
-});
-
-authController.get('/login', (req, res, next) => {
-  res.render('auth/login', {"message": req.flash('error')});
-});
 authController.post("/login", passport.authenticate("local", {
-  // console.log
   successRedirect: "/users",
-  failureRedirect: "/login",
+  failureRedirect: "/",
   failureFlash: true,
   passReqToCallback: true
 }));
 
-authController.get('/private', ensureLogin.ensureLoggedIn(), (req, res) =>{
-  res.render('private', {user: req.user});
-});
 
-authController.get('/some-private', ensureAuthenticated, (req, res)=>{
-  res.render('some-private', {user: req.user});
-});
 authController.get("/logout", (req, res) => {
   req.logout();
-  res.redirect("/login");
+  res.redirect("/");
 });
-
 
 // Handle backup of the IBI
 authController.get('/backup', checkBoss, (req, res) =>{
-  res.render('backup', {user: req.user });
+  res.render('auth/backup', {user: req.user });
 });
 
 authController.post('/backup', checkBoss,(req, res)=>{
   const username = req.body.username;
   const password = req.body.password;
   const role = req.body.role;
-
+  const familyName = req.body.familyname;
+  const name = req.body.name;
+  const city = req.body.city
+// ############################################################
   if (username === "" || password === "" || role === "") {
-    res.render("backup", { message: "Indicate username and password" });
+    res.render("auth/backup", { message: "Indicate username, password and role" });
     return;
   }
-
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("backup", { message: "The username already exists" });
+      res.render("auth/backup", { message: "The username already exists" });
       return;
     }
-
     var salt     = bcrypt.genSaltSync(bcryptSalt);
     var hashPass = bcrypt.hashSync(password, salt);
-
     var newUser = User({
-      username, role,
+      username, role, name, familyName, city,
       password: hashPass
     });
-
+    console.log('new User', newUser);
     newUser.save((err) => {
       if (err) {
-        res.render("backup", { message: "The username already exists" });
+        res.render("auth/backup", { message: "The username already exists" });
       } else {
         res.redirect("/users");
       }
@@ -145,7 +95,7 @@ authController.post('/backup', checkBoss,(req, res)=>{
   });
 });
 
-authController.get('/users', ensureAuthenticated, (req, res, next)=>{
+authController.get('/users', ensureEmployee, (req, res, next)=>{
   User.find({role: {$not: {$eq: 'Boss'}}
   }, (err, users)=>{
     if (err){ return next(err);}
@@ -163,17 +113,71 @@ authController.post('/users/:userId/delete', checkBoss, (req, res, next) =>{
       }
   });
 });
-
-authController.get('/profile', ensureAuthenticated, (req, res, next) => {
-  res.render('profile', {user: req.user});
-});
-
-
+// authController.get('/profile', ensureAuthenticated, (req, res, next) => {
+//   res.render('profile', {user: req.user});
+// });
 authController.get("/auth/facebook", passport.authenticate("facebook"));
 authController.get("/auth/facebook/callback", passport.authenticate("facebook", {
-  successRedirect: "/profile",
+  successRedirect: "/courses",
   failureRedirect: "/"
 }));
+authController.get("/courses", ensureAuthenticated, (req, res, next) =>{
+  Course.find((err, courses) =>{
+    if (err){ return next(err) }
+    res.render('auth/courses', {courses});
+  })
+})
 
+// authController.get("/signup", (req, res, next) => {
+//   res.render("auth/signup");
+// });
+//
+// authController.post("/signup", (req, res, next) => {
+//   const username = req.body.username;
+//   const password = req.body.password;
+//   const role = req.body.role;
+//
+//   if (username === "" || password === "") {
+//     res.render("auth/signup", { message: "Indicate username and password" });
+//     return;
+//   }
+//
+//   User.findOne({ username }, "username", (err, user) => {
+//     if (user !== null) {
+//       res.render("auth/signup", { message: "The username already exists" });
+//       return;
+//     }
+//
+//     var salt     = bcrypt.genSaltSync(bcryptSalt);
+//     var hashPass = bcrypt.hashSync(password, salt);
+//
+//     var newUser = User({
+//       username, role,
+//       password: hashPass
+//     });
+//
+//     newUser.save((err) => {
+//       if (err) {
+//         res.render("auth/signup", { message: "The username already exists" });
+//       } else {
+//         res.redirect("/login");
+//       }
+//     });
+//   });
+// });
+
+// authController.get('/login', (req, res, next) => {
+//   res.render('auth/login', {"message": req.flash('error')});
+// });
+
+
+
+// authController.get('/private', ensureLogin.ensureLoggedIn(), (req, res) =>{
+//   res.render('private', {user: req.user});
+// });
+//
+// authController.get('/some-private', ensureAuthenticated, (req, res)=>{
+//   res.render('some-private', {user: req.user});
+// });
 
 module.exports = authController;

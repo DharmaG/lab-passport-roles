@@ -13,5 +13,8 @@ siteController.get('/', (req, res, next) =>{
   res.render('index');
 });
 
+siteController.get('/forbidden', (req, res, next) =>{
+  res.render('forbidden');
+});
 
 module.exports = siteController;

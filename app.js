@@ -16,6 +16,7 @@ const session       = require("express-session");
 const passport      = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const FbStrategy = require('passport-facebook').Strategy;
+// const bootstrap = require("express-bootstrap-service");
 // Mongoose configuration
 const mongoose = require("mongoose");
 mongoose.connect("mongodb://localhost/ibi-ironhack");
@@ -33,6 +34,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+// app.use(bootstrap.serve);
 app.use(session({
   secret: "passport-local-strategy",
   resave: true,
@@ -84,7 +86,7 @@ passport.use(new FbStrategy({
       } else {
         user = new User({
           username: profile.displayName,
-          role: 'student'
+          role: 'Student'
         });
         user.save(function(err) {
           if(err) {

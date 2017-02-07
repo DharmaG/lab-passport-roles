@@ -2,18 +2,34 @@
 <html>
   <head>
     <title>Index</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <link rel='stylesheet' href='/stylesheets/index.css' />
+    <link rel="stylesheet" href="stylesheets/bootstrap.css">
+    <link rel='stylesheet' href='stylesheets/index.css'>
   </head>
   <body>
-    <h1></h1>
     <div class="row">
-      <article class="col-md-4-offset-4 center" >
-        <img class="logo" src="images/ih-logo.jpg" alt="Ironhack Logo">
-        <p>Welcome to The outstanding Ironhack platform</a>
-        <a href="/login">Login</p>
-        <a href="/auth/facebook">New alumni? Log in with facebook</a>
-      </article>
+      <div class="container">
+        <article class="col-md-4-offset-4 center" >
+          <img class="logo" src="images/ih-logo.jpg" alt="Ironhack Logo">
+          <div class="row">
+            <p>Welcome to The Ironhack platform</a>
+            <form action="/login" method="post">
+              <% if (typeof(message) !== "undefined") { %>
+                <div class="error-message"><%= message %></div>
+              <% } %>
+              <label for="username">Username</label>
+              <input type="text" name="username" >
+              <label for="password">Password</label>
+              <input type="text" name="password" >
+              <div class="">
+                <button>Log in</button>
+              </div>
+            </form>
+              <button class="facebook-login">
+                <a href="/auth/facebook">New alumni? Log in with facebook</a>
+            </button>
+          </div>
+        </article>
+      </div>
     </div>
   </body>
 </html>

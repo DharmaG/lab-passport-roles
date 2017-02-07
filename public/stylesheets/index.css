@@ -1,14 +1,79 @@
 body{
-  background-color: #192129;
+  background-color: #2f3435;
 }
 .center{
   margin: auto;
   text-align: center;
 }
-
+article{
+  background-color: #242829;
+  width: 400px;
+  height: 620px;
+}
+p{
+  color: white;
+  font-weight: 200;
+}
 .logo {
   width: 400px;
 }
  a{
    display: block;
+ }
+ form label {
+   color: #666;
+   display: inline-block;
+   /*margin-bottom: 10px;*/
+   text-align: center;
+   margin-top: 7px;
+   width: 70%;
+ }
+ form input,
+ form button {
+   box-sizing: border-box;
+   font-size: 14px;
+   outline: 0;
+   padding: 4px;
+   width: 70%;
+   margin-top: 15px;
+ }
+
+ form button {
+   background: #257ab9;
+   border: 1px solid #43a3e6;
+   border-radius: 4px;
+   color: #fff;
+   cursor: pointer;
+   display: inline-block;
+   font-size: 14px;
+   padding: 7px 16px;
+   margin-top: 20px;
+   text-decoration: none;
+   text-transform: uppercase;
+   transition: .3s ease background;
+   width: 70%;
+ }
+
+ form button:hover {
+   background: #fff;
+   color: #43a3e6;
+   transition: .3s ease background;
+ }
+ .facebook-login {
+     background: #2A49A5;
+     border: 1px solid #082783;
+     box-shadow: 0 1px #4C6BC7 inset;
+     color: white;
+     padding: 3px 5px;
+     text-decoration: none;
+     text-shadow: 0 -1px 0 #082783;
+     font: 12px Verdana, sans-serif;
+ }
+ .error-message {
+   background: #F02B63;
+   box-sizing: border-box;
+   color: #fff;
+   margin: 20px auto;
+   padding: 20px;
+   width: 100%;
  }

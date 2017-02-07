@@ -3,6 +3,6 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-ul {
-  width: 500px;
+tr > td{
+  vertical-align: middle;
 }
