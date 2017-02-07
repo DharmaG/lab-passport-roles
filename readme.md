@@ -6,12 +6,13 @@ First thing first, the boss lost his access over the platform and he needs to ta
 
 First Iteration:
   Rebuild all the platform and make the SuperUser to be able to create more "participants". The routes must be protected so only logged users can access it. For the moment foreign users can´t access it, only the superuser can create access.
+  Make a schema with different roles: "Boss", "Developer", "TA".
 
 Second Iteration:
 
   The SuperUser must be able also to delete employees from the database. This action is reserved to him and only to him. Users can also edit their profile.
 
-  Fourth Iteration:
+  Third Iteration:
     Now that our platform is 100% operative, it´s time to let some new people come in.
-    Add a functionality so new alumni can access the platform login with the Social Network of your choice.
+    Add a functionality so new alumni can access the platform login with the Social Network of your choice. Every new alumni should be stored in the database with "student" role.
     Alumni can see their profile and the operative courses but they should not be able to see any of the "management" platform.
