@@ -1,0 +1,14 @@
+body{
+  background-color: #192129;
+}
+.center{
+  margin: auto;
+  text-align: center;
+}
+
+.logo {
+  width: 400px;
+}
+ a{
+   display: block;
+ }

@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 var express = require('express');
 var path = require('path');
 var favicon = require('serve-favicon');
@@ -6,10 +7,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 const morgan = require('morgan');
 const flash = require("connect-flash");
-const User = require('./models/user')
+const User = require('./models/user');
+const Course = require('./models/course');
 const bcrypt = require('bcrypt');
-var index = require('./routes/index');
-// var users = require('./routes/users');
+const authController = require("./routes/authController");
+const siteController = require("./routes/siteController");
 const session       = require("express-session");
 const passport      = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
@@ -31,7 +33,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-const authController = require("./routes/authController");
 app.use(session({
   secret: "passport-local-strategy",
   resave: true,
@@ -68,13 +69,35 @@ passport.use(new LocalStrategy({
     return next(null, user);
   });
 }));
+
 passport.use(new FbStrategy({
   clientID: "742315382613846",
   clientSecret: "56d1f9f91c40b8d65e3163e8f4fbc877",
   callbackURL: "http://localhost:3000/auth/facebook/callback"
 }, (accessToken, refreshToken, profile, done) => {
-  done(null, profile);
-}));
+  User.findOne({ username: profile.displayName }, function(err, user) {
+      if(err) {
+        console.log(err);  // handle errors!
+      }
+      if (!err && user !== null) {
+        done(null, user);
+      } else {
+        user = new User({
+          username: profile.displayName,
+          role: 'student'
+        });
+        user.save(function(err) {
+          if(err) {
+            console.log(err);  // handle errors!
+          } else {
+            console.log("saving user ...");
+            done(null, user);
+          }
+        });
+      }
+    });
+  }
+));
 passport.serializeUser((user, cb) => {
   cb(null, user);
 });
@@ -84,8 +107,7 @@ passport.deserializeUser((user, cb) => {
 
 // Routes
 app.use('/', authController);
-
-app.use('/', index);
+app.use('/', siteController);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

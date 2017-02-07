@@ -1,3 +1,4 @@
+/*jshint esversion: 6 */
 const express = require('express');
 const authController = express.Router();
 // Models
@@ -12,22 +13,22 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
   } else {
-    res.redirect('/login')
+    res.redirect('/login');
   }
 }
 
 function checkIfStaff(role){
-  console.log('jdsjhfdhjdf')
-  return ((role === "Boss") || (role === "Developer") || (role === "TA"))
+  console.log('jdsjhfdhjdf');
+  return ((role === "Boss") || (role === "Developer") || (role === "TA"));
 }
 
 function ensureEmployee(req, res, next){
-  console.log(req.user.username)
+  console.log(req.user.username);
     if (req.isAuthenticated() && checkIfStaff(req.user.role) ) {
       console.log('guarra');
       return next();
     } else {
-      res.redirect('/login')
+      res.redirect('/login');
     }
 }
 function checkRoles(role) {
@@ -35,9 +36,9 @@ function checkRoles(role) {
     if (req.isAuthenticated() && req.user.role === role) {
       return next();
     } else {
-      res.redirect('/login')
+      res.redirect('/login');
     }
-  }
+  };
 }
 const checkBoss = checkRoles('Boss');
 const checkTA = checkRoles('TA');
@@ -50,7 +51,7 @@ authController.get("/signup", (req, res, next) => {
 authController.post("/signup", (req, res, next) => {
   const username = req.body.username;
   const password = req.body.password;
-  const role = req.body.role
+  const role = req.body.role;
 
   if (username === "" || password === "") {
     res.render("auth/signup", { message: "Indicate username and password" });
@@ -83,7 +84,7 @@ authController.post("/signup", (req, res, next) => {
 
 authController.get('/login', (req, res, next) => {
   res.render('auth/login', {"message": req.flash('error')});
-})
+});
 authController.post("/login", passport.authenticate("local", {
   // console.log
   successRedirect: "/users",
@@ -94,11 +95,11 @@ authController.post("/login", passport.authenticate("local", {
 
 authController.get('/private', ensureLogin.ensureLoggedIn(), (req, res) =>{
   res.render('private', {user: req.user});
-})
+});
 
 authController.get('/some-private', ensureAuthenticated, (req, res)=>{
-  res.render('some-private', {user: req.user})
-})
+  res.render('some-private', {user: req.user});
+});
 authController.get("/logout", (req, res) => {
   req.logout();
   res.redirect("/login");
@@ -108,12 +109,12 @@ authController.get("/logout", (req, res) => {
 // Handle backup of the IBI
 authController.get('/backup', checkBoss, (req, res) =>{
   res.render('backup', {user: req.user });
-})
+});
 
 authController.post('/backup', checkBoss,(req, res)=>{
   const username = req.body.username;
   const password = req.body.password;
-  const role = req.body.role
+  const role = req.body.role;
 
   if (username === "" || password === "" || role === "") {
     res.render("backup", { message: "Indicate username and password" });
@@ -141,30 +142,38 @@ authController.post('/backup', checkBoss,(req, res)=>{
         res.redirect("/users");
       }
     });
-  })
-})
+  });
+});
 
 authController.get('/users', ensureAuthenticated, (req, res, next)=>{
   User.find({role: {$not: {$eq: 'Boss'}}
   }, (err, users)=>{
     if (err){ return next(err);}
-    res.render('users', {users: users, currentUser: req.user})
-  })
+    res.render('users', {users, currentUser: req.user});
+  });
 });
 
-authController.get('/destroy/:userId', checkBoss, (req, res, next) =>{
-  console.log('madafaka');
-  res.redirect('/backup');
+authController.post('/users/:userId/delete', checkBoss, (req, res, next) =>{
+  User.remove({ _id: req.params.userId }, function(err) {
+      if (!err) {
+        res.redirect('/users');
+      }
+      else {
+        message.type = 'error';
+      }
+  });
 });
 
-authController.get('/profile', ensureEmployee, (req, res, next) => {
+authController.get('/profile', ensureAuthenticated, (req, res, next) => {
   res.render('profile', {user: req.user});
 });
 
+
 authController.get("/auth/facebook", passport.authenticate("facebook"));
 authController.get("/auth/facebook/callback", passport.authenticate("facebook", {
-  successRedirect: "/private-page",
+  successRedirect: "/profile",
   failureRedirect: "/"
 }));
+
 
 module.exports = authController;

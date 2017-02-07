@@ -1,16 +1,26 @@
-<form action="/login" method="POST">
-  <div>
-    <label for="username">Username:</label>
-    <input type="text" name="username">
-  </div>
-  <div>
-    <label for="password">Password:</label>
-    <input type="password" name="password">
-  </div>
-  <% if (typeof(message) != "undefined") { %>
-    <div class="error-message"><%= message %></div>
-  <% } %>
-  <div>
-    <input type="submit" value="Log In">
-  </div>
-</form>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Login</title>
+    <link rel="stylesheet" href="stylesheets/login.css">
+  </head>
+  <body>
+    <form id="form" action="/login" method="POST">
+      <div>
+        <label for="username">Username:</label>
+        <input type="text" name="username">
+      </div>
+      <div>
+        <label for="password">Password:</label>
+        <input type="password" name="password">
+      </div>
+      <% if (typeof(message) !== "undefined") { %>
+        <div class="error-message"><%= message %></div>
+      <% } %>
+      <div>
+        <button>Log In</button>
+      </div>
+    </form>
+  </body>
+</html>
