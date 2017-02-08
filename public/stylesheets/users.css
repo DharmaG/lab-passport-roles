@@ -6,3 +6,7 @@ body {
 tr > td{
   vertical-align: middle;
 }
+
+table{
+  padding-top: 10px;
+}

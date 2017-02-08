@@ -10,11 +10,11 @@ const passport = require('passport');
 const ensureLogin = require('connect-ensure-login');
 
 siteController.get('/', (req, res, next) =>{
-  res.render('index');
+  res.render('site/index');
 });
 
 siteController.get('/forbidden', (req, res, next) =>{
-  res.render('forbidden', {user: req.user });
+  res.render('site/forbidden', {user: req.user });
 });
 
 module.exports = siteController;

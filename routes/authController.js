@@ -98,7 +98,7 @@ authController.get('/users', ensureEmployee, (req, res, next)=>{
   User.find({role: {$not: {$eq: 'Boss'}}
   }, (err, users)=>{
     if (err){ return next(err);}
-    res.render('users', {users, currentUser: req.user});
+    res.render('auth/users', {users, currentUser: req.user});
   });
 });
 
@@ -170,12 +170,6 @@ authController.get("/courses", ensureAuthenticated, (req, res, next) =>{
 
 
 
-// authController.get('/private', ensureLogin.ensureLoggedIn(), (req, res) =>{
-//   res.render('private', {user: req.user});
-// });
-//
-// authController.get('/some-private', ensureAuthenticated, (req, res)=>{
-//   res.render('some-private', {user: req.user});
-// });
+
 
 module.exports = authController;
