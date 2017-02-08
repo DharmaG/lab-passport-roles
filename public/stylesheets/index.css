@@ -61,37 +61,33 @@ a {
   font-size: 14px;
   outline: 0;
   padding: 4px;
-  width: 70%;
-  margin-top: 15px;
+  margin-top: 25px;
   background: #257ab9;
   border: 1px solid #43a3e6;
   border-radius: 4px;
   color: #fff;
   cursor: pointer;
-  display: inline-block;
-  font-size: 14px;
-  padding: 7px 16px;
-  margin-top: 20px;
   text-decoration: none;
   text-transform: uppercase;
   transition: .3s ease background;
-  width: 70%;
+
+}
+.facebook{
+  width: 84%;
+  text-align: center;
+  margin: 25px auto;
+}
+span img{
+  width: 100%;
+  display: inline-block;
+  margin: 0 10px 12px 0;
 }
  form button:hover {
    background: #fff;
    color: #43a3e6;
    transition: .3s ease background;
  }
- .facebook-login {
-     background: #2A49A5;
-     border: 1px solid #082783;
-     box-shadow: 0 1px #4C6BC7 inset;
-     color: white;
-     padding: 3px 5px;
-     text-decoration: none;
-     text-shadow: 0 -1px 0 #082783;
-     font: 12px Verdana, sans-serif;
- }
+
  /*button.facebook-login {
    padding-right: 45px;
    height: 35px;
