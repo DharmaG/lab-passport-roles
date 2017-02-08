@@ -1,5 +1,8 @@
 body{
-  background-color: #2f3435;
+  background-color: #ededed;
+}
+h1{
+  color: #e5e5e5;
 }
 .center{
   margin: auto;
@@ -69,6 +72,35 @@ p{
      text-shadow: 0 -1px 0 #082783;
      font: 12px Verdana, sans-serif;
  }
+ button.facebook-login {
+   padding-right: 45px;
+   height: 35px;
+   background: none;
+   border: none;
+   display: block;
+   background-size: 35px 35px;
+   background-position: right center;
+   background-repeat: no-repeat;
+   border-radius: 4px;
+   color: white;
+   font-family:"Merriweather Sans", sans-serif;
+   font-size: 14px;
+   margin-bottom: 15px;
+   width: 205px;
+   border-bottom: 2px solid transparent;
+   border-left: 1px solid transparent;
+   border-right: 1px solid transparent;
+   box-shadow: 0 4px 2px -2px gray;
+   text-shadow: rgba(0, 0, 0, .5) -1px -1px 0;
+   border-color: #2d5073;
+   background-color: #3b5998;
+   background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
+}
+/*button#facebook {
+   border-color: #2d5073;
+   background-color: #3b5998;
+   background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
+}*/
  .error-message {
    background: #F02B63;
    box-sizing: border-box;

@@ -5,20 +5,16 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Osom</title>
-  <%# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/css/bootstrap-select.min.css">%>
   <link rel="stylesheet" href="stylesheets/bootstrap.css">
-  <link rel="stylesheet" href="stylesheets/backup.css">
-  <%# <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.12.2/js/bootstrap-select.min.js"></script>%>
-
+  <link rel="stylesheet" href="stylesheets/admin.css">
 </head>
 <body>
   <div class="container">
     <div class="row">
-      <h2>Hello Boss</h2>
-      <%# <p>You´re the leader of the I.B.I.</p>
-      <p>Add user</p>%>
-      <section class="col-md-6 col-md-offset-3">
-      <form action="/backup" method="POST" id="form-container">
+      <h1>Ironhack Control Panel</h1>
+      <h3 class="text-muted">Add a new user:</h3>
+    <section class="col-md-6 col-md-offset-3">
+      <form action="/users" method="POST" id="form-container">
         <% if (typeof(message) != "undefined") { %>
           <div class="error-message"><%= message %></div>
         <% } %>

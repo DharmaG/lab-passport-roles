@@ -17,7 +17,6 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/');
   }
 }
-
 function checkIfStaff(role){
   return ((role === "Boss") || (role === "Developer") || (role === "TA"));
 }
@@ -56,12 +55,12 @@ authController.get("/logout", (req, res) => {
   res.redirect("/");
 });
 
-// Handle backup of the IBI
-authController.get('/backup', checkBoss, (req, res) =>{
-  res.render('auth/backup', {user: req.user });
+// Handle admin of the IBI
+authController.get('/admin', checkBoss, (req, res) =>{
+  res.render('auth/admin', {user: req.user });
 });
 
-authController.post('/backup', checkBoss,(req, res)=>{
+authController.post('/users', checkBoss,(req, res)=>{
   const username = req.body.username;
   const password = req.body.password;
   const role = req.body.role;
@@ -70,12 +69,12 @@ authController.post('/backup', checkBoss,(req, res)=>{
   const city = req.body.city
 // ############################################################
   if (username === "" || password === "" || role === "") {
-    res.render("auth/backup", { message: "Indicate username, password and role" });
+    res.render("auth/admin", { message: "Indicate username, password and role" });
     return;
   }
   User.findOne({ username }, "username", (err, user) => {
     if (user !== null) {
-      res.render("auth/backup", { message: "The username already exists" });
+      res.render("auth/admin", { message: "The username already exists" });
       return;
     }
     var salt     = bcrypt.genSaltSync(bcryptSalt);
@@ -87,7 +86,7 @@ authController.post('/backup', checkBoss,(req, res)=>{
     console.log('new User', newUser);
     newUser.save((err) => {
       if (err) {
-        res.render("auth/backup", { message: "The username already exists" });
+        res.render("auth/admin", { message: "The username already exists" });
       } else {
         res.redirect("/users");
       }
@@ -107,8 +106,7 @@ authController.post('/users/:userId/delete', checkBoss, (req, res, next) =>{
   User.remove({ _id: req.params.userId }, function(err) {
       if (!err) {
         res.redirect('/users');
-      }
-      else {
+      } else {
         message.type = 'error';
       }
   });

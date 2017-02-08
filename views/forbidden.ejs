@@ -6,5 +6,10 @@
   </head>
   <body>
     <h1>Access forbidden</h1>
+    <% if ( user.role === "Student") { %>
+      <a href="/courses">Back to courses</a>
+    <% } else if (user.role === "Developer" || user.role === "Teacher Assistant") {%>
+      <a href="/users">Back to users</a>
+      <% } %>
   </body>
 </html>

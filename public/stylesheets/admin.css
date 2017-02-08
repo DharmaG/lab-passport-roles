@@ -1,10 +1,10 @@
 body{
-  background-color: #abc4ce ;
+  background-color: #cecece ;
 }
 form{
   padding: 8px 0;
   text-align: center;
-  background-color: white;
+  background-color: #F4F4F4;
   border: 1px solid #0e6184;
   border-radius: 3px;
 
@@ -13,7 +13,6 @@ form label {
   color: #666;
   font-size: 15px:
   display: inline-block;
-  /*margin-bottom: 10px;*/
   text-align: center;
   margin-top: 7px;
   width: 70%;

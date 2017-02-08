@@ -14,7 +14,7 @@ siteController.get('/', (req, res, next) =>{
 });
 
 siteController.get('/forbidden', (req, res, next) =>{
-  res.render('forbidden');
+  res.render('forbidden', {user: req.user });
 });
 
 module.exports = siteController;
