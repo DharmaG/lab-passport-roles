@@ -111,9 +111,7 @@ authController.post('/users/:userId/delete', checkBoss, (req, res, next) =>{
       }
   });
 });
-// authController.get('/profile', ensureAuthenticated, (req, res, next) => {
-//   res.render('profile', {user: req.user});
-// });
+
 authController.get("/auth/facebook", passport.authenticate("facebook"));
 authController.get("/auth/facebook/callback", passport.authenticate("facebook", {
   successRedirect: "/courses",
@@ -125,51 +123,5 @@ authController.get("/courses", ensureAuthenticated, (req, res, next) =>{
     res.render('auth/courses', {courses});
   })
 })
-
-// authController.get("/signup", (req, res, next) => {
-//   res.render("auth/signup");
-// });
-//
-// authController.post("/signup", (req, res, next) => {
-//   const username = req.body.username;
-//   const password = req.body.password;
-//   const role = req.body.role;
-//
-//   if (username === "" || password === "") {
-//     res.render("auth/signup", { message: "Indicate username and password" });
-//     return;
-//   }
-//
-//   User.findOne({ username }, "username", (err, user) => {
-//     if (user !== null) {
-//       res.render("auth/signup", { message: "The username already exists" });
-//       return;
-//     }
-//
-//     var salt     = bcrypt.genSaltSync(bcryptSalt);
-//     var hashPass = bcrypt.hashSync(password, salt);
-//
-//     var newUser = User({
-//       username, role,
-//       password: hashPass
-//     });
-//
-//     newUser.save((err) => {
-//       if (err) {
-//         res.render("auth/signup", { message: "The username already exists" });
-//       } else {
-//         res.redirect("/login");
-//       }
-//     });
-//   });
-// });
-
-// authController.get('/login', (req, res, next) => {
-//   res.render('auth/login', {"message": req.flash('error')});
-// });
-
-
-
-
 
 module.exports = authController;
