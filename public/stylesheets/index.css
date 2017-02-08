@@ -56,7 +56,27 @@ p{
    transition: .3s ease background;
    width: 70%;
  }
-
+a {
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: 0;
+  padding: 4px;
+  width: 70%;
+  margin-top: 15px;
+  background: #257ab9;
+  border: 1px solid #43a3e6;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-size: 14px;
+  padding: 7px 16px;
+  margin-top: 20px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: .3s ease background;
+  width: 70%;
+}
  form button:hover {
    background: #fff;
    color: #43a3e6;
@@ -72,7 +92,7 @@ p{
      text-shadow: 0 -1px 0 #082783;
      font: 12px Verdana, sans-serif;
  }
- button.facebook-login {
+ /*button.facebook-login {
    padding-right: 45px;
    height: 35px;
    background: none;
@@ -95,7 +115,7 @@ p{
    border-color: #2d5073;
    background-color: #3b5998;
    background-image: url(http://icons.iconarchive.com/icons/danleech/simple/512/facebook-icon.png);
-}
+}*/
 /*button#facebook {
    border-color: #2d5073;
    background-color: #3b5998;
