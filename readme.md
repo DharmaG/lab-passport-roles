@@ -105,3 +105,5 @@ Alumni can see their profile and the operative courses, but they should not be a
 - Alumni can see other alumni profiles.
 - Alumni can't see other roles profiles: Boss, Developer, nor TA.
 - TA's will be able to add alumni to the courses, creating a nested document in the `Course` model.
+
+/Happy coding!
