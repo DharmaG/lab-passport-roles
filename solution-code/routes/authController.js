@@ -13,7 +13,7 @@ const { checkRoles,
         ensureAuthenticated } = require('../middleware/user-roles-auth');
 
 const checkBoss = checkRoles('Boss');
-const checkTA = checkRoles('TA');
+const checkTA = checkRoles('Teacher Assistant');
 const checkDev = checkRoles('Developer');
 
 
@@ -91,11 +91,6 @@ authController.get("/auth/facebook/callback", passport.authenticate("facebook", 
   successRedirect: "/courses",
   failureRedirect: "/"
 }));
-authController.get("/courses", ensureAuthenticated, (req, res, next) =>{
-  Course.find((err, courses) =>{
-    if (err){ return next(err) }
-    res.render('auth/courses', {courses});
-  })
-})
+
 
 module.exports = authController;

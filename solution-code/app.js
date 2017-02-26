@@ -11,6 +11,7 @@ const Course = require('./models/course');
 const bcrypt = require('bcrypt');
 const authController = require("./routes/authController");
 const siteController = require("./routes/siteController");
+const courseController = require("./routes/courseController");
 const session       = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
 const passport      = require("passport");
@@ -32,7 +33,7 @@ app.set("layout", "layouts/main-layout");
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('combined'));
+app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -113,6 +114,7 @@ passport.deserializeUser((user, cb) => {
 // Routes
 app.use('/', authController);
 app.use('/', siteController);
+app.use('/courses', courseController);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
