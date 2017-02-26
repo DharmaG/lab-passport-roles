@@ -1,3 +1,6 @@
+const boss = "Boss";
+const dev = "Developer";
+const TA = "Teacher Assistant";
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -6,7 +9,7 @@ function ensureAuthenticated(req, res, next) {
   }
 }
 function checkIfStaff(role){
-  return ((role === "Boss") || (role === "Developer") || (role === "TA"));
+  return ((role === boss) || (role === dev) || (role === TA));
 }
 
 function ensureEmployee(req, res, next){
