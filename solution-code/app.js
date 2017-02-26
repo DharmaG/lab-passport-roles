@@ -11,7 +11,7 @@ const Course = require('./models/course');
 const bcrypt = require('bcrypt');
 const authController = require("./routes/authController");
 const siteController = require("./routes/siteController");
-const courseController = require("./routes/courseController");
+const coursesController = require("./routes/coursesController");
 const session       = require("express-session");
 const expressLayouts = require("express-ejs-layouts");
 const passport      = require("passport");
@@ -114,7 +114,7 @@ passport.deserializeUser((user, cb) => {
 // Routes
 app.use('/', authController);
 app.use('/', siteController);
-app.use('/courses', courseController);
+app.use('/courses', coursesController);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
