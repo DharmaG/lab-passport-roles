@@ -32,4 +32,13 @@ ul{
    margin-top: 1px;
    border-color: black;
  }
- /*=======================COURSES================================*/
+ /*======================= Users ================================*/
+
+
+ tr > td{
+   vertical-align: middle;
+ }
+
+ table{
+   padding-top: 10px;
+ }
