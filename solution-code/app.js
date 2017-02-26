@@ -12,9 +12,11 @@ const bcrypt = require('bcrypt');
 const authController = require("./routes/authController");
 const siteController = require("./routes/siteController");
 const session       = require("express-session");
+const expressLayouts = require("express-ejs-layouts");
 const passport      = require("passport");
 const LocalStrategy = require("passport-local").Strategy;
 const FbStrategy = require('passport-facebook').Strategy;
+require("dotenv").config();
 // const bootstrap = require("express-bootstrap-service");
 // Mongoose configuration
 const mongoose = require("mongoose");
@@ -25,6 +27,8 @@ var app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+app.use(expressLayouts);
+app.set("layout", "layouts/main-layout");
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -72,8 +76,8 @@ passport.use(new LocalStrategy({
 }));
 
 passport.use(new FbStrategy({
-  clientID: "742315382613846",
-  clientSecret: "56d1f9f91c40b8d65e3163e8f4fbc877",
+  clientID: process.env.FACEBOOK_CLIENT_ID,
+  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
   callbackURL: "http://localhost:3000/auth/facebook/callback"
 }, (accessToken, refreshToken, profile, done) => {
   User.findOne({ username: profile.displayName }, function(err, user) {
