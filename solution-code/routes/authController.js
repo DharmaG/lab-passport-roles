@@ -77,7 +77,7 @@ authController.get('/users', ensureEmployee, (req, res, next)=>{
 });
 
 authController.post('/users/:userId/delete', checkBoss, (req, res, next) =>{
-  User.remove({ _id: req.params.userId }, function(err) {
+  User.remove({ _id: req.params.userId },(err) =>{
       if (!err) {
         res.redirect('/users');
       } else {
