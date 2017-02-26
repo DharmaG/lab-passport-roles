@@ -1,42 +1,17 @@
-/*jshint esversion: 6 */
-const express = require('express');
-const authController = express.Router();
+const express                = require('express');
+const authController         = express.Router();
 // Models
-const User = require('../models/user');
-const Course = require('../models/course')
-// Bcrypt to encrypt passwords
-const bcrypt         = require("bcrypt");
-const bcryptSalt     = 10;
-const passport = require('passport');
-const ensureLogin = require('connect-ensure-login');
+const User                   = require('../models/user');
+const Course                 = require('../models/course')
+const bcrypt                 = require("bcrypt");
+const bcryptSalt             = 10;
+const passport               = require('passport');
+const ensureLogin            = require('connect-ensure-login');
+const { checkRoles,
+  ensureEmployee,
+  checkIfStaff,
+        ensureAuthenticated } = require('../middleware/user-roles-auth');
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  } else {
-    res.redirect('/');
-  }
-}
-function checkIfStaff(role){
-  return ((role === "Boss") || (role === "Developer") || (role === "TA"));
-}
-
-function ensureEmployee(req, res, next){
-    if (req.isAuthenticated() && checkIfStaff(req.user.role) ) {
-      return next();
-    } else {
-      res.redirect('/forbidden');
-    }
-}
-function checkRoles(role) {
-  return function(req, res, next) {
-    if (req.isAuthenticated() && req.user.role === role) {
-      return next();
-    } else {
-      res.redirect('/forbidden');
-    }
-  };
-}
 const checkBoss = checkRoles('Boss');
 const checkTA = checkRoles('TA');
 const checkDev = checkRoles('Developer');
@@ -68,8 +43,8 @@ authController.post('/users', checkBoss,(req, res)=>{
   const name = req.body.name;
   const city = req.body.city
 // ############################################################
-  if (username === "" || password === "" || role === "") {
-    res.render("auth/admin", { message: "Indicate username, password and role" });
+  if (username === "" || password === "" || role === "" || city === "") {
+    res.render("auth/admin", { message: "Indicate username, password, city and role" });
     return;
   }
   User.findOne({ username }, "username", (err, user) => {
@@ -79,11 +54,10 @@ authController.post('/users', checkBoss,(req, res)=>{
     }
     var salt     = bcrypt.genSaltSync(bcryptSalt);
     var hashPass = bcrypt.hashSync(password, salt);
-    var newUser = User({
+    var newUser  = User({
       username, role, name, familyName, city,
       password: hashPass
     });
-    console.log('new User', newUser);
     newUser.save((err) => {
       if (err) {
         res.render("auth/admin", { message: "The username already exists" });
