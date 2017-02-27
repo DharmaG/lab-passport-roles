@@ -51,4 +51,12 @@ coursesController.post("/:course_id/delete", checkTA, (req, res, next)=>{
   });
 });
 
+coursesController.get("/:course_id", checkTA, (req, res, next)=>{
+  const id = req.params.course_id;
+  Course.findById(id, (err, course)=>{
+    if(err) return next(err);
+    res.render("courses/show",{user: req.user, course})
+  })
+});
+
 module.exports = coursesController;
