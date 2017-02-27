@@ -1,0 +1,9 @@
+<h2>Show de courses</h2>
+
+
+
+<% if (user.role === "Teacher Assistant") { %>
+  <form class="btn" action="/courses/<%=course.id %>/delete" method="Post">
+    <button>Delete Course</button>
+  </form>
+ <% } %>
