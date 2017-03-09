@@ -6,19 +6,18 @@ body {
 a {
   color: #00B7FF;
 }
-
-/*=======================COURSES================================*/
-body {
-  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-  font-size: 14px;
+.main-color{
+  /*background-color: #a3a5a8;*/
 }
+/*=======================COURSES================================*/
+
 ul {
   margin-top: 80px;
 }
 h1{
   text-align: center;
 }
-ul{
+.course-list {
   background-color: black;
   border: none;
   border-radius: 6px;
@@ -35,6 +34,7 @@ ul{
  }
  li > a {
    color: #f2f2f2;
+   font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
  }
 
 /*========================================================================*/
@@ -53,8 +53,8 @@ ul{
 /*========================================================================*/
 
 /*======================== FORMS ===========================================*/
-
-form{
+.creation-form{
+  height: 600px;
   padding: 8px 0;
   text-align: center;
   background-color: #F4F4F4;
@@ -62,7 +62,7 @@ form{
   border-radius: 3px;
 
 }
-form label {
+.creation-form label {
   color: #666;
   font-size: 15px:
   display: inline-block;
@@ -70,8 +70,8 @@ form label {
   margin-top: 7px;
   width: 70%;
 }
-form input,
-form button {
+.creation-form input,
+.creation-form button {
   box-sizing: border-box;
   font-size: 14px;
   outline: 0;
@@ -83,7 +83,7 @@ form button {
   margin: 0 auto;
   width: 388px;
 }
-form button {
+.creation-form button {
   background: #257ab9;
   border: 1px solid #43a3e6;
   border-radius: 4px;
@@ -99,9 +99,111 @@ form button {
   width: 70%;
 }
 
-form button:hover {
+.creation-form button:hover {
   background: #fff;
   color: #43a3e6;
   transition: .3s ease background;
 }
 /*========================================================================*/
+
+/*======================LOGIN FORM================================*/
+h1{
+  color: #e5e5e5;
+}
+.center{
+  margin: auto;
+  text-align: center;
+}
+.black{
+  background-color: #242829;
+}
+section{
+  width: 400px;
+  height: 620px;
+}
+p{
+  color: white;
+  font-weight: 200;
+}
+.logo {
+  width: 400px;
+}
+ a{
+   display: block;
+ }
+
+ .login-form{
+   height: 90%;
+ }
+ .login-form label {
+   color: #666;
+   display: inline-block;
+   text-align: center;
+   margin-top: 7px;
+   width: 70%;
+ }
+ .login-form input,
+ .login-form button {
+   box-sizing: border-box;
+   font-size: 14px;
+   outline: 0;
+   padding: 4px;
+   width: 70%;
+   margin-top: 15px;
+ }
+
+ .login-form button {
+   background: #257ab9;
+   border: 1px solid #43a3e6;
+   border-radius: 4px;
+   color: #fff;
+   cursor: pointer;
+   display: inline-block;
+   font-size: 14px;
+   padding: 7px 16px;
+   margin-top: 20px;
+   text-decoration: none;
+   text-transform: uppercase;
+   transition: .3s ease background;
+   width: 70%;
+ }
+/*a {
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: 0;
+  padding: 4px;
+  margin-top: 25px;
+  background: #257ab9;
+  border: 1px solid #43a3e6;
+  border-radius: 4px;
+  color: #fff;
+  cursor: pointer;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: .3s ease background;
+}*/
+.facebook{
+  width: 84%;
+  text-align: center;
+  margin: 25px auto;
+}
+span img{
+  width: 100%;
+  display: inline-block;
+  margin: 0 10px 12px 0;
+}
+ .login-form button:hover {
+   background: #fff;
+   color: #43a3e6;
+   transition: .3s ease background;
+ }
+
+
+ .error-message {
+   background: #F02B63;
+   box-sizing: border-box;
+   color: #fff;
+   margin: 20px auto;
+   padding: 20px;
+   width: 100%;
+ }

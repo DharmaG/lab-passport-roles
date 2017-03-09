@@ -1,41 +1,27 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>Index</title>
-    <link rel="stylesheet" href="stylesheets/bootstrap.css">
-    <link rel="stylesheet" href="stylesheets/bootstrap-social.css">
-    <link rel='stylesheet' href='stylesheets/index.css'>
-  </head>
-  <body>
-    <div class="row">
-      <div class="container">
-        <article class="col-md-4-offset-4 center" >
-          <img class="logo" src="images/ih-logo.jpg" alt="Ironhack Logo">
-          <div class="row">
-            <p>Welcome to The Ironhack platform</a>
-            <form action="/login" method="post">
-              <% if (typeof(message) !== "undefined") { %>
-                <div class="error-message"><%= message %></div>
-              <% } %>
-              <label for="username">Username</label>
-              <input type="text" name="username" >
-              <label for="password">Password</label>
-              <input type="password" name="password" >
-              <div class="">
-                <button>Log in</button>
-              </div>
-            </form>
-            <div class="facebook">
-              <a class="btn btn-block btn-social btn-facebook facebook" href="/auth/facebook">
-                <span class="fa fa-facebook"><img src="images/fb-span.png" alt=""></span>
-                Log in with facebook</a>
+  <div class="row main-color">
+    <div class="container">
+      <section class="col-md-4-offset-4 center black" >
+        <img class="logo" src="images/ih-logo.jpg" alt="Ironhack Logo">
+        <div class="row">
+          <p>Welcome to The Ironhack platform</a>
+          <form class="login-form" action="/login" method="post">
+            <% if (typeof(message) !== "undefined") { %>
+              <div class="error-message"><%= message %></div>
+            <% } %>
+            <label for="username">Username</label>
+            <input type="text" name="username" >
+            <label for="password">Password</label>
+            <input type="password" name="password" >
+            <div class="">
+              <button>Log in</button>
             </div>
-              <%# <button class="btn btn-block btn-social btn-twitter">%>
-
-            <%# </button>%>
+          </form>
+          <div class="facebook">
+            <a class="btn btn-block btn-social btn-facebook facebook" href="/auth/facebook">
+              <span class="fa fa-facebook"><img src="images/fb-span.png" alt=""></span>
+              Log in with facebook</a>
           </div>
-        </article>
-      </div>
+        </div>
+      </section>
     </div>
-  </body>
-</html>
+  </div>

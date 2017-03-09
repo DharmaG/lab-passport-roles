@@ -1,15 +1,9 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <body>
-    <h1>Access forbidden</h1>
-    <% if ( user.role === "Student") { %>
-      <a href="/courses">Back to courses</a>
-    <% } else if (user.role === "Developer" || user.role === "Teacher Assistant") {%>
-      <a href="/users">Back to users</a>
-      <% } %>
-  </body>
-</html>
+<div>
+  <h1>Access forbidden</h1>
+  <h3>Sorry, you´re not allowed to see this ressource</h3>
+  <% if ( user.role === "Student") { %>
+    <a href="/courses">Back to courses</a>
+  <% } else if (user.role === "Developer" || user.role === "Teacher Assistant") {%>
+    <a href="/users">Back to users</a>
+  <% } %>
+</div>

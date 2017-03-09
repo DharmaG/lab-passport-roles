@@ -1,10 +1,12 @@
-const express                             = require('express');
-const coursesController                      = express.Router();
+const express           = require('express');
+const coursesController = express.Router();
 // Models
-const User                                = require('../models/user');
-const Course                              = require('../models/course')
-const { checkRoles, ensureAuthenticated } = require('../middleware/user-roles-auth');
-const checkTA = checkRoles("Teacher Assistant");
+const User              = require('../models/user');
+const Course            = require('../models/course')
+const CourseUser        = require('../models/course-user');
+const { checkRoles,
+  ensureAuthenticated } = require('../middleware/user-roles-auth');
+const checkTA           = checkRoles("Teacher Assistant");
 
 coursesController.get("/", ensureAuthenticated, (req, res, next) =>{
   Course.find((err, courses) =>{
@@ -42,21 +44,44 @@ coursesController.post("/", checkTA, (req, res, next)=>{
 
 coursesController.post("/:course_id/delete", checkTA, (req, res, next)=>{
   const id = req.params.course_id
-  Course.remove({_id: id}, (err) => {
-    if (!err) {
-      res.redirect('/courses');
-    } else {
-      message.type = 'error';
+  Course.findById(id,(err, course) => {
+    if (err) return next(err);
+    if (!course){
+      res.send("No course with this critteria")
+      return
     }
-  });
+    course.remove((err)=>{
+      if (err) return next(err)
+      res.redirect('/courses');
+    })
+  })
 });
 
 coursesController.get("/:course_id", checkTA, (req, res, next)=>{
   const id = req.params.course_id;
   Course.findById(id, (err, course)=>{
-    if(err) return next(err);
-    res.render("courses/show",{user: req.user, course})
+    if (err) return next(err);
+    if (!course){
+      res.send("no courses found");
+      return;
+    }
+    course.getEnrolledStudents((err, students)=>{
+      course.getAvailableStudents((err, available)=>{
+        res.render("courses/show",{currentUser: req.user, course, students, available})
+        })
+      })
   })
 });
+coursesController.post("/:course_id/add-student", checkTA, (req, res, next)=>{
+  let courseId = req.params.course_id;
+  let studentId = req.body.student_id;
+  CourseUser.create({courseId, userId: studentId},(err, result)=>{
+    if (err) {
+      res.render("courses/show", {message: "Something went wrong"})
+      return
+    }
+    res.redirect(`/courses/${courseId}`)
+  })
+})
 
 module.exports = coursesController;
