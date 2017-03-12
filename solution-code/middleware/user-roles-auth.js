@@ -1,6 +1,8 @@
 const boss = "Boss";
 const dev = "Developer";
 const TA = "Teacher Assistant";
+
+
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
     return next();
@@ -28,7 +30,11 @@ function checkRoles(role) {
     }
   };
 }
+function loggedIn(req, res, next){
+  res.locals.loggedIn = req.isAuthenticated();
+  next();
+}
 
 module.exports = {
-  checkRoles, ensureEmployee, checkIfStaff, ensureAuthenticated
+  checkRoles, ensureEmployee, checkIfStaff, ensureAuthenticated, loggedIn
 }

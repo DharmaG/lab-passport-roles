@@ -41,7 +41,6 @@ authController.post('/users', checkBoss,(req, res)=>{
   const familyName = req.body.familyname;
   const name = req.body.name;
   const city = req.body.city
-// ############################################################
   if (username === "" || password === "" || role === "" || city === "") {
     res.render("auth/admin", { message: "Indicate username, password, city and role" });
     return;

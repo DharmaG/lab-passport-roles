@@ -20,6 +20,7 @@ const LocalStrategy     = require("passport-local").Strategy;
 const FbStrategy        = require('passport-facebook').Strategy;
 const mongoose          = require("mongoose");
 const moment            = require("moment");
+const {loggedIn}          = require('./middleware/user-roles-auth')
 mongoose.connect("mongodb://localhost/ibi-ironhack");
 require("dotenv").config();
 
@@ -76,7 +77,7 @@ passport.use(new FbStrategy({
 }, (accessToken, refreshToken, profile, done) => {
   User.findOne({ username: profile.displayName }, function(err, user) {
       if(err) {
-        console.log(err);  
+        console.log(err);
       }
       if (!err && user !== null) {
         done(null, user);
@@ -103,24 +104,21 @@ passport.use(new FbStrategy({
 
 app.use(passport.initialize());
 app.use(passport.session());
+app.use('/',loggedIn);
 
 app.use('/', authController);
 app.use('/', siteController);
 app.use('/courses', coursesController);
 
-// catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
   err.status = 404;
   next(err);
 });
 
-// error handler
 app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
-  // render the error page
   res.status(err.status || 500);
   res.render('error');
 });

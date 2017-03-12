@@ -7,7 +7,7 @@ const passport       = require('passport');
 const ensureLogin    = require('connect-ensure-login');
 
 siteController.get('/', (req, res, next) =>{
-  res.render('site/index');
+  res.render('site/index',{loggedIn: res.locals.loggedIn});
 });
 
 siteController.get('/forbidden', (req, res, next) =>{
