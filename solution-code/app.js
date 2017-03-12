@@ -8,8 +8,6 @@ const bodyParser        = require('body-parser');
 const flash             = require("connect-flash");
 const User              = require('./models/user');
 const Course            = require('./models/course');
-const CourseUser        = require('./models/course-user');
-const bcrypt            = require('bcrypt');
 const authController    = require("./routes/authController");
 const siteController    = require("./routes/siteController");
 const coursesController = require("./routes/coursesController");
@@ -20,7 +18,7 @@ const LocalStrategy     = require("passport-local").Strategy;
 const FbStrategy        = require('passport-facebook').Strategy;
 const mongoose          = require("mongoose");
 const moment            = require("moment");
-const {loggedIn}          = require('./middleware/user-roles-auth')
+const {loggedIn}        = require('./middleware/user-roles-auth')
 mongoose.connect("mongodb://localhost/ibi-ironhack");
 require("dotenv").config();
 
@@ -42,66 +40,8 @@ app.use(session({
   resave: true,
   saveUninitialized: true
 }));
-passport.serializeUser((user, cb) => {
-  cb(null, user.id);
-});
 
-passport.deserializeUser((id, cb) => {
-  User.findOne({ "_id": id }, (err, user) => {
-    if (err) { return cb(err); }
-    cb(null, user);
-  });
-});
-
-passport.use(new LocalStrategy({
-  passReqToCallback : true
-},(req, username, password, next) => {
-  User.findOne({ username }, (err, user) => {
-    if (err) {
-      return next(err);
-    }
-    if (!user) {
-      return next(null, false, { message: "Incorrect username" });
-    }
-    if (!bcrypt.compareSync(password, user.password)) {
-      return next(null, false, { message: "Incorrect password" });
-    }
-    return next(null, user);
-  });
-}));
-
-passport.use(new FbStrategy({
-  clientID: process.env.FACEBOOK_CLIENT_ID,
-  clientSecret: process.env.FACEBOOK_CLIENT_SECRET,
-  callbackURL: "http://localhost:3000/auth/facebook/callback"
-}, (accessToken, refreshToken, profile, done) => {
-  User.findOne({ username: profile.displayName }, function(err, user) {
-      if(err) {
-        console.log(err);
-      }
-      if (!err && user !== null) {
-        done(null, user);
-      } else {
-        console.log(profile);
-        let [name, familyName] = profile.displayName.split(" ");
-        user = new User({
-          name, familyName,
-          username: profile.displayName,
-          role: 'Student'
-        });
-        user.save(function(err) {
-          if(err) {
-            console.log(err);  // handle errors!
-          } else {
-            console.log("saving user ...");
-            done(null, user);
-          }
-        });
-      }
-    });
-  }
-));
-
+require('./config/passport')(passport)
 app.use(passport.initialize());
 app.use(passport.session());
 app.use('/',loggedIn);
