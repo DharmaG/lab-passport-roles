@@ -1,53 +1,58 @@
-<h2>Course detail page</h2>
-<h4><%= course.name %></h4>
-<h4><%= moment(course.startingDate).format('MMMM Do YYYY') %></h4>
-<h4><%= moment(course.endDate).format('MMMM Do YYYY') %></h4>
-
-<% if (currentUser.role === "Teacher Assistant") { %>
-  <form class="btn" action="/courses/<%=course.id %>/delete" method="Post">
-    <button>Delete Course</button>
-  </form>
- <% } %>
- <div class="">
-   <p>Add students to course</p>
-   <form action="/courses/<%=course.id%>/add-student" method="post">
-    <div class="">
-      <select name="student_id" >
-        <% available.forEach((a)=>{ %>
-          <option value="<%=a._id%>" ><%= a.name %></option>
-        <% }) %>
-      </select>
-    </div>
-     <button type="submit" name="" value="">Add Student</button>
-   </form>
- </div>
-<h6>Students enrolled in this course:</h6>
 <div class="container">
-
-<div class="row">
-  <div class="col-md-4-offset-6">
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Family Name</th>
-          <th>City</th>
-      </thead>
-      <tbody>
-        <% students.forEach((student) =>{ %>
-      <tr>
-         <td><%=student.name%></td>
-         <td><%=student.familyName%></td>
-         <td><%=student.city%></td>
-         <% if (currentUser.role === "TA"){ %>
-           <form action="users/<%=user._id %>/delete" method="POST">
-            <td><button class="btn btn-danger" type="submit">Delete User</button></td>
-           </form>
-           <% } %>
-     </tr>
-     <% }) %>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-md-10">
+      <h2><%= course.name %></h2>
+      <h4>Starting Date: <%= moment(course.startingDate).format('MMMM Do YYYY') %></h4>
+      <h4>End Date: <%= moment(course.endDate).format('MMMM Do YYYY') %></h4>
+    </div>
+    <div class="col-md-2">
+    <% if (currentUser.role === "Teacher Assistant") { %>
+      <form class="btn btn-danger delete-course-form" action="/courses/<%=course.id %>/delete" method="Post">
+        Delete Course
+      </form>
+     <% } %>
+    </div>
   </div>
-</div>
-</div>
+  <div class="row">
+    <section class="col-sm-4 new-student">
+      <p>Add students to course</p>
+      <form class="add-student-form" action="/courses/<%=course.id%>/add-student" method="post">
+       <div class="">
+         <select class="form-control medium" name="student_id" >
+           <% available.forEach((a_student)=>{ %>
+             <option value="<%=a_student._id%>"><%= a_student.name %></option>
+           <% }) %>
+         </select>
+       </div>
+        <button class="btn add-student-btn "type="submit" name="" value="">Add Student</button>
+      </form>
+    </section>
+  </div>
+    <div class="row">
+      <div class="col-md-4-offset-6">
+        <h6>Students enrolled in this course:</h6>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Family Name</th>
+              <th>City</th>
+          </thead>
+          <tbody>
+            <% students.forEach((student) =>{ %>
+          <tr>
+             <td><%=student.name%></td>
+             <td><%=student.familyName%></td>
+             <td><%=student.city%></td>
+             <% if (currentUser.role === "TA"){ %>
+               <form action="users/<%=user._id %>/delete" method="POST">
+                <td><button class="btn btn-danger" type="submit">Delete User</button></td>
+               </form>
+               <% } %>
+         </tr>
+         <% }) %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+ </div>

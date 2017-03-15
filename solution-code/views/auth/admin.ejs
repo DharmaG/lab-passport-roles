@@ -1,53 +1,41 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Osom</title>
-  <link rel="stylesheet" href="stylesheets/bootstrap.css">
-  <link rel="stylesheet" href="stylesheets/admin.css">
-</head>
-<body>
-  <div class="container">
-    <div class="row">
-      <h1>Ironhack Control Panel</h1>
-      <h3 class="text-muted">Add a new user:</h3>
-    <section class="col-md-6 col-md-offset-3">
-      <form class="creation-form" action="/users" method="POST" id="form-container">
-        <% if (typeof(message) != "undefined") { %>
-          <div class="error-message"><%= message %></div>
-        <% } %>
-        <div class="">
-          <label for="name">Name</label>
-          <input type="text" name="name" >
-        </div>
-         <div class="">
-        <label for="family name">Family Name</label>
-          <input type="text" name="familyname" >
-        </div>%>
-        <div class="">
-          <label for="username">Username</label>
-          <input type="text" name="username" >
-        </div>
-        <div class="">
-          <label for="role">Role</label>
-          <select class="form-control medium" name="role">
-            <option value="Developer">Developer</option>
-            <option value="Teacher Assistant">TA</option>
-            <option value="Boss">Boss</option>
-          </select>
-        </div>
-        <div class="">
-          <label for="city">City</label>
-          <input type="text" name="city" >
-        </div>
-        <div class="">
-          <label for="password">Password</label>
-          <input type="password" name="password" >
-        </div>
-        <button>Create account</button>
-    </div>
+
+<div class="container">
+  <div class="row">
+    <h1>Ironhack Control Panel</h1>
+    <h3 class="text-muted">Add a new user:</h3>
+  <section class="col-md-6 col-md-offset-3">
+    <form class="creation-form" action="/users" method="POST" id="form-container">
+      <% if (typeof(message) != "undefined") { %>
+        <div class="error-message"><%= message %></div>
+      <% } %>
+      <div class="">
+        <label for="name">Name</label>
+        <input type="text" name="name" >
+      </div>
+       <div class="">
+      <label for="family name">Family Name</label>
+        <input type="text" name="familyname" >
+      </div>%>
+      <div class="">
+        <label for="username">Username</label>
+        <input type="text" name="username" >
+      </div>
+      <div class="">
+        <label for="role">Role</label>
+        <select class="form-control medium" name="role">
+          <option value="Developer">Developer</option>
+          <option value="Teacher Assistant">TA</option>
+          <option value="Boss">Boss</option>
+        </select>
+      </div>
+      <div class="">
+        <label for="city">City</label>
+        <input type="text" name="city" >
+      </div>
+      <div class="">
+        <label for="password">Password</label>
+        <input type="password" name="password" >
+      </div>
+      <button>Create account</button>
   </div>
-</body>
-</html>
+</div>

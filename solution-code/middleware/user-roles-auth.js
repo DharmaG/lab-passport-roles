@@ -30,11 +30,11 @@ function checkRoles(role) {
     }
   };
 }
-function loggedIn(req, res, next){
+function isLoggedIn(req, res, next){
   res.locals.loggedIn = req.isAuthenticated();
   next();
 }
 
 module.exports = {
-  checkRoles, ensureEmployee, checkIfStaff, ensureAuthenticated, loggedIn
+  checkRoles, ensureEmployee, checkIfStaff, ensureAuthenticated, isLoggedIn
 }

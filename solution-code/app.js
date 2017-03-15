@@ -14,8 +14,6 @@ const coursesController = require("./routes/coursesController");
 const session           = require("express-session");
 const expressLayouts    = require("express-ejs-layouts");
 const passport          = require("passport");
-const LocalStrategy     = require("passport-local").Strategy;
-const FbStrategy        = require('passport-facebook').Strategy;
 const mongoose          = require("mongoose");
 const moment            = require("moment");
 const {loggedIn}        = require('./middleware/user-roles-auth')
@@ -25,7 +23,6 @@ require("dotenv").config();
 var app = express();
 app.use(flash());
 app.locals.moment = moment
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use(expressLayouts);

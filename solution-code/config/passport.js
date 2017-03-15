@@ -27,12 +27,9 @@ module.exports = function(passport){
     callbackURL: "http://localhost:3000/auth/facebook/callback"
   }, (accessToken, refreshToken, profile, done) => {
     User.findOne({ username: profile.displayName }, function(err, user) {
-        if(err) {
-          console.log(err);
-        }
-        if (!err && user !== null) {
-          done(null, user);
-        } else {
+        if(err) {  console.log(err);}
+        if (!err && user !== null) {done(null, user);}
+        else {
           console.log(profile);
           let [name, familyName] = profile.displayName.split(" ");
           user = new User({

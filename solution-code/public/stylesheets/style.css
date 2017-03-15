@@ -25,6 +25,7 @@ h1{
 
 .course-title {
    height: 50px;
+   width: 600px;
    background-color: #007EB5;
    font-size: 21px;
    color: white;
@@ -167,21 +168,7 @@ p{
    transition: .3s ease background;
    width: 70%;
  }
-/*a {
-  box-sizing: border-box;
-  font-size: 14px;
-  outline: 0;
-  padding: 4px;
-  margin-top: 25px;
-  background: #257ab9;
-  border: 1px solid #43a3e6;
-  border-radius: 4px;
-  color: #fff;
-  cursor: pointer;
-  text-decoration: none;
-  text-transform: uppercase;
-  transition: .3s ease background;
-}*/
+
 .facebook{
   width: 84%;
   text-align: center;
@@ -200,10 +187,26 @@ span img{
 
 
  .error-message {
-   background: #F02B63;
+   background: red;
    box-sizing: border-box;
    color: #fff;
-   margin: 20px auto;
+   margin: 0 auto;
    padding: 20px;
-   width: 100%;
+   width: 90%;
  }
+/*============================COURSES SHOW VIEW ============================*/
+.delete-course-form {
+  margin-top: 30px;
+}
+.add-student-form button {
+  box-sizing: border-box;
+  font-size: 14px;
+  outline: 0;
+  padding: 4px;
+  width: 70%;
+  margin-top: 15px;
+}
+
+article.new-student{
+  height: 500px;
+}
