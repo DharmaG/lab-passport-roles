@@ -8,6 +8,7 @@ const { checkRoles,
   ensureAuthenticated } = require('../middleware/user-roles-auth');
 const checkTA           = checkRoles("Teacher Assistant");
 
+
 coursesController.get("/", ensureAuthenticated, (req, res, next) =>{
   Course.find((err, courses) =>{
     if (err){ return next(err) }
@@ -42,6 +43,19 @@ coursesController.post("/", checkTA, (req, res, next)=>{
   })
 })
 
+coursesController.get("/:course_id/edit", checkTA, (req, res, next)=>{
+  const id = req.params.course_id
+  Course.findById(id,(err, course) => {
+    if (err) return next(err);
+    if (!course){
+      res.send("No course with this critteria")
+      return
+    } else {
+      res.render("courses/edit",{course});
+    }
+  });
+});
+
 coursesController.post("/:course_id/delete", checkTA, (req, res, next)=>{
   const id = req.params.course_id
   Course.findById(id,(err, course) => {
@@ -72,6 +86,21 @@ coursesController.get("/:course_id", checkTA, (req, res, next)=>{
       })
   })
 });
+
+coursesController.post("/:course_id", checkTA, (req, res, next)=> {
+  const {name, startingDate ,endDate, level, available, courseId} = req.body
+  const criteria = {name, startingDate, endDate, level, available, courseId}
+  Course.findByIdAndUpdate(courseId, criteria, (err, course) => {
+    if (req.body.startingDate === "" || req.body.endDate === ""){
+      res.render("courses/edit", {message: "Please fill in all the fields", course})
+      return
+    }
+    console.log("actualización del curso")
+    if (err) return next(err);
+    res.redirect(`courses/${course._id}`);
+  })
+});
+
 coursesController.post("/:course_id/add-student", checkTA, (req, res, next)=>{
   let courseId = req.params.course_id;
   let studentId = req.body.student_id;

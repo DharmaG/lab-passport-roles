@@ -7,8 +7,8 @@ const bcryptSalt             = 10;
 const passport               = require('passport');
 const ensureLogin            = require('connect-ensure-login');
 const { checkRoles,
-  ensureEmployee,
-  checkIfStaff,
+        ensureEmployee,
+        checkIfStaff,
         ensureAuthenticated } = require('../middleware/user-roles-auth');
 
 const checkBoss = checkRoles('Boss');

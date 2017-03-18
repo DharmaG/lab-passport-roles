@@ -1,3 +1,4 @@
+
 body {
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
@@ -209,4 +210,17 @@ span img{
 
 article.new-student{
   height: 500px;
+}
+.course-edit-btn{
+  color: white;
+}
+.course-edit-btn:hover{
+  text-decoration: none;
+}
+.col-md-2 form {
+  margin: 20px 0;
+  width: 150px;
+}
+.enrolled{
+  margin: 100px 0;
 }
