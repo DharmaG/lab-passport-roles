@@ -7,10 +7,12 @@
     </div>
     <div class="col-md-2">
     <% if (currentUser.role === "Teacher Assistant") { %>
-      <form class="btn btn-danger delete-course-form" action="/courses/<%=course.id %>/delete" method="Post">
-        Delete Course
+      <form class="" action="/courses/<%=course.id %>/delete" method="Post">
+        <button class="btn btn-danger delete-btn" type="submit"/>Delete Course</button>
       </form>
-      <form class="btn btn-primary" action="/courses/<%= course._id %>/edit">Edit Course</form>
+      <form class="" method="get" action="/courses/<%= course._id %>/edit">
+        <button class="btn btn-primary edit-btn">Edit Course</button>
+      </form>
      <% } %>
     </div>
   </div>
@@ -48,8 +50,9 @@
              <td><%=student.city%></td>
              <% if (currentUser.role === "Teacher Assistant"){ %>
                <td>
-                 <form action="users/<%=student._id %>/delete" method="POST">
-                   <button class="btn btn-warning" type="submit">Remove User</button>
+                 <form action="/courses/<%= course._id %>/remove-student" method="POST">
+                   <input type="hidden" name="student_id" value="<%= student._id%>">
+                   <button class="btn btn-warning" type="submit">Remove Student</button>
                  </form>
                </td>
                <% } %>

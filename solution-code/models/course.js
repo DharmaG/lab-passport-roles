@@ -18,7 +18,7 @@ const courseSchema = new Schema({
 });
 
 courseSchema.pre("save", function(next){
-  console.log("saved");
+  console.log("saved succesfully");
   next()
 })
 
@@ -26,7 +26,6 @@ courseSchema.pre("remove", function(next){
   CoursesUsers.remove({courseId: this._id})
     .then(()=>next())
 })
-
 
 // Possible students
 courseSchema.methods.getAvailableStudents = function(cb){

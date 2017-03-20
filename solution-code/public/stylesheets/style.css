@@ -217,9 +217,10 @@ article.new-student{
 .course-edit-btn:hover{
   text-decoration: none;
 }
-.col-md-2 form {
+.delete-btn, .edit-btn {
   margin: 20px 0;
   width: 150px;
+  height: 38px;
 }
 .enrolled{
   margin: 100px 0;

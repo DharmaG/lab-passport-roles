@@ -76,7 +76,7 @@ coursesController.get("/:course_id", checkTA, (req, res, next)=>{
   Course.findById(id, (err, course)=>{
     if (err) return next(err);
     if (!course){
-      res.send("no courses found");
+      res.send("no courses found with this criteria");
       return;
     }
     course.getEnrolledStudents((err, students)=>{
@@ -105,6 +105,18 @@ coursesController.post("/:course_id/add-student", checkTA, (req, res, next)=>{
   let courseId = req.params.course_id;
   let studentId = req.body.student_id;
   CourseUser.create({courseId, userId: studentId},(err, result)=>{
+    if (err) {
+      res.render("courses/show", {message: "Something went wrong"})
+      return
+    }
+    res.redirect(`/courses/${courseId}`)
+  })
+})
+
+coursesController.post("/:course_id/remove-student", checkTA, (req, res, next)=>{
+  let courseId = req.params.course_id;
+  let studentId = req.body.student_id;
+  CourseUser.remove({courseId, userId: studentId},(err, result)=>{
     if (err) {
       res.render("courses/show", {message: "Something went wrong"})
       return

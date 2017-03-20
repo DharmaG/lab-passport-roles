@@ -2,7 +2,8 @@ const express           = require("express");
 const usersController   = express.Router();
 const User              = require("../models/user");
 const { ensureEmployee,
-        checkRoles }     = require("../middleware/user-roles-auth");
+        checkRoles,
+        ensureAuthenticated}     = require("../middleware/user-roles-auth");
 const checkBoss         = checkRoles('Boss');
 
 
@@ -44,6 +45,14 @@ usersController.post('/', checkBoss,(req, res)=>{
       }
     });
   });
+});
+
+usersController.get("/:user_id", ensureAuthenticated, (req, res, next)=>{
+  User.findById(req.params.user_id).exec((err, user)=>{
+    if (err) return next(err);
+    if (!user) {res.send("No users found"); return;}
+    res.render("users/profile", {user})
+  })
 });
 
 usersController.post('/:user_id/delete', checkBoss, (req, res, next) =>{
